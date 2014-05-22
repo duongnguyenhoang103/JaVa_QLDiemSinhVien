@@ -235,6 +235,7 @@ public class frmBangDiem extends javax.swing.JPanel {
                 .addComponent(jLabel1))
         );
 
+        jPanel2.setBackground(new java.awt.Color(153, 204, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
         jPanel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
@@ -368,6 +369,7 @@ public class frmBangDiem extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel8.setBackground(new java.awt.Color(153, 204, 255));
         jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(0, 0, 255)));
         jPanel8.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
@@ -399,7 +401,7 @@ public class frmBangDiem extends javax.swing.JPanel {
         jbNew.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jbNew.setForeground(new java.awt.Color(255, 0, 0));
         jbNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/new.png"))); // NOI18N
-        jbNew.setText("Add");
+        jbNew.setText("AddNew");
         jbNew.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jbNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -589,9 +591,6 @@ public class frmBangDiem extends javax.swing.JPanel {
         //jrbTrangthai.setSelected(true);
 
     }
-    private void jtbbangdiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbbangdiemKeyReleased
-    }//GEN-LAST:event_jtbbangdiemKeyReleased
-
     private void jtbbangdiemMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbbangdiemMouseReleased
         jcbMasv.setSelectedItem(jtbbangdiem.getValueAt(jtbbangdiem.getSelectedRow(), 0).toString());
         jcbMaMH.setSelectedItem(jtbbangdiem.getValueAt(jtbbangdiem.getSelectedRow(), 1).toString());
@@ -725,6 +724,30 @@ public class frmBangDiem extends javax.swing.JPanel {
         jcbMaLop.setEnabled(true);
 
     }//GEN-LAST:event_jbUpdateActionPerformed
+
+    private void jtbbangdiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbbangdiemKeyReleased
+        jcbMasv.setSelectedItem(jtbbangdiem.getValueAt(jtbbangdiem.getSelectedRow(), 0).toString());
+        jcbMaMH.setSelectedItem(jtbbangdiem.getValueAt(jtbbangdiem.getSelectedRow(), 1).toString());
+        jcbLanthi.setSelectedItem(jtbbangdiem.getValueAt(jtbbangdiem.getSelectedRow(), 2).toString());
+        jcbHeSo.setSelectedItem(jtbbangdiem.getValueAt(jtbbangdiem.getSelectedRow(), 3).toString());
+        jtfDiem.setText(jtbbangdiem.getValueAt(jtbbangdiem.getSelectedRow(), 4).toString());
+        String trangthai = jtbbangdiem.getValueAt(jtbbangdiem.getSelectedRow(), 5).toString();
+        if (trangthai.equals("true")) {
+            jrbTrangthai.setSelected(true);
+        } else {
+            jrbTrangthai.setSelected(false);
+
+        }
+        jbNew.setEnabled(false);
+jbUpdate.setEnabled(true);
+        jbDelete.setEnabled(true);
+        jcbMasv.setEnabled(false);
+        jcbMaMH.setEnabled(false);
+        jcbLanthi.setEnabled(false);
+        jcbMaLop.setEnabled(false);
+      
+    }//GEN-LAST:event_jtbbangdiemKeyReleased
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
