@@ -136,7 +136,7 @@ public class Main extends javax.swing.JFrame {
         jmHelp = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("MARK SYSTEM MANAGER -  TRAN VAN TUYEN - MASV: B103104290 - LOP: L10CQCN4 - KHOA CNTT - HOC VIEN CONG NGHE BUU CHINH VIEN THONG");
+        setTitle("MARK SYSTEM MANAGER - CREATED BY: NGUYEN HOANG DUONG -TRUONG: DAI HOC DIEN LUC");
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
@@ -349,7 +349,7 @@ public class Main extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/banerr_1.jpg"))); // NOI18N
-        jLabel1.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/banner.png"))); // NOI18N
+    
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
