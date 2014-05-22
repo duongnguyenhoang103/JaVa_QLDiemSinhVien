@@ -107,7 +107,7 @@ public class frmSinhVien extends javax.swing.JPanel {
         jPanel1.setForeground(new java.awt.Color(0, 0, 204));
         jPanel1.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
 
-        jPanel2.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel2.setBackground(new java.awt.Color(153, 204, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 204)));
         jPanel2.setForeground(new java.awt.Color(153, 153, 255));
 
@@ -126,6 +126,12 @@ public class frmSinhVien extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 204));
         jLabel3.setText("Hệ Đào Tạo");
+
+        jtfMaSV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfMaSVActionPerformed(evt);
+            }
+        });
 
         jcblop.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -183,7 +189,7 @@ public class frmSinhVien extends javax.swing.JPanel {
                         .addComponent(jLabel9))
                     .addComponent(jrbsex)
                     .addComponent(jtfDienThoai, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -266,13 +272,13 @@ public class frmSinhVien extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(jtbTTSV);
 
-        jPanel3.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel3.setBackground(new java.awt.Color(153, 204, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 204)));
 
         jbAdd.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jbAdd.setForeground(new java.awt.Color(255, 0, 0));
         jbAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/new.png"))); // NOI18N
-        jbAdd.setText("Add");
+        jbAdd.setText("AddNew");
         jbAdd.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jbAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -322,16 +328,13 @@ public class frmSinhVien extends javax.swing.JPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbUpdate)
-                    .addComponent(jbAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbExit, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jbUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-
-        jPanel3Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jbAdd, jbDelete, jbExit, jbUpdate});
-
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -592,11 +595,20 @@ public class frmSinhVien extends javax.swing.JPanel {
         jtfHeDaoTao.setText("");
         jtfngaysinh.setText("");
         jtfMaSV.requestFocus();
+        jbAdd.setEnabled(true);
+            jbUpdate.setEnabled(false);
+            jbDelete.setEnabled(false);
+            jtfMaSV.setEnabled(true);
     }
 
     private void jbExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExitActionPerformed
         this.resetForm();
+        loaddata();
     }//GEN-LAST:event_jbExitActionPerformed
+
+    private void jtfMaSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfMaSVActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfMaSVActionPerformed
     private void showAll() {
         while (dtm.getRowCount() > 0) {
             dtm.removeRow(0);
