@@ -15,7 +15,7 @@ public class AboutMe extends javax.swing.JFrame {
      */
     public AboutMe() {
         initComponents();
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     /**
