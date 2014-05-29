@@ -6,14 +6,23 @@ package Search;
 
 import BangDiem.BangDiem;
 import BangDiem.IBangDiemDAO;
-import BangDiem.frmBangDiem;
+import Check.Check;
+import LopHoc.ILopHocDAO;
+import LopHoc.LopHoc;
 import SinhVien.ISinhVienDAO;
 import SinhVien.SinhVien;
+import SinhVien.SinhVienDAO;
+import static SinhVien.frmSinhVien.regexDDMMYYYY;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -25,34 +34,54 @@ public class Search extends javax.swing.JPanel {
     private DefaultTableModel dtm;
     private DefaultTableModel dtmMark;
     ArrayList<BangDiem> listbdiem = null;
+    ArrayList<LopHoc> allClass = null;
 
     /**
      * Creates new form Search
      */
     public Search() {
-        initComponents();
-        dtm = new DefaultTableModel();
-        dtmMark = new DefaultTableModel();
-
-        //TIm kiem sinh vien theo ma lop
-        dtm.addColumn("ID");
-        dtm.addColumn("Họ Tên");
-        dtm.addColumn("ID Lớp");
-        dtm.addColumn("Hệ ĐT");
-        dtm.addColumn("Ngày Sinh");
-        dtm.addColumn("Địa Chỉ");
-        dtm.addColumn("Giới Tính");
-        dtm.addColumn("Số ĐT");
-        jtbTTSV.setModel(dtm);
-
-        //TIm Kiem diem theo ma sv
-        dtmMark.addColumn("Mã Sinh Viên");
-        dtmMark.addColumn("Mã Môn Học");
-        dtmMark.addColumn("Lần Thi");
-        dtmMark.addColumn("Hệ Số");
-        dtmMark.addColumn("Điểm");
-        dtmMark.addColumn("Trạng Thái");
-        jtbbangdiem.setModel(dtmMark);
+        try {
+            initComponents();
+            jPanel8.setVisible(false);
+            jPanel5.setVisible(false);
+            
+            DefaultComboBoxModel dcbm = new DefaultComboBoxModel();
+            ILopHocDAO lopHocDao = (ILopHocDAO) Class.forName("LopHoc.LopHocDAO").newInstance();
+            allClass = lopHocDao.getAll();
+            for (LopHoc lh : allClass) {
+                dcbm.addElement(lh.getMalop());
+            }
+            jcblop2.setModel(dcbm);
+            
+            dtm = new DefaultTableModel();
+            dtmMark = new DefaultTableModel();
+            
+            //TIm kiem sinh vien theo ma lop
+            dtm.addColumn("ID");
+            dtm.addColumn("Họ Tên");
+            dtm.addColumn("ID Lớp");
+            dtm.addColumn("Hệ ĐT");
+            dtm.addColumn("Ngày Sinh");
+            dtm.addColumn("Địa Chỉ");
+            dtm.addColumn("Giới Tính");
+            dtm.addColumn("Số ĐT");
+            jtbTTSV.setModel(dtm);
+            
+            //TIm Kiem diem theo ma sv
+            dtmMark.addColumn("Mã Sinh Viên");
+            dtmMark.addColumn("Mã Môn Học");
+            dtmMark.addColumn("Lần Thi");
+            dtmMark.addColumn("Hệ Số");
+            dtmMark.addColumn("Điểm");
+            dtmMark.addColumn("Trạng Thái");
+            jtbbangdiem.setModel(dtmMark);
+       } catch (InstantiationException ex) {
+            Logger.getLogger(Search.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Search.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Search.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
@@ -142,6 +171,11 @@ public class Search extends javax.swing.JPanel {
         jtbTTSV.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 jtbTTSVMouseReleased(evt);
+            }
+        });
+        jtbTTSV.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtbTTSVKeyReleased(evt);
             }
         });
         jScrollPane2.setViewportView(jtbTTSV);
@@ -530,7 +564,10 @@ public class Search extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jtbTTSVMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbTTSVMouseReleased
-        // TODO add your handling code here:
+        jPanel8.setVisible(true);
+        jPanel5.setVisible(true);
+
+        loadDataDownCoponnent();
     }//GEN-LAST:event_jtbTTSVMouseReleased
     private static Object[] toObjectData(SinhVien sv) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -550,7 +587,7 @@ public class Search extends javax.swing.JPanel {
         while (dtm.getRowCount() > 0) {
             dtm.removeRow(0);
         }
-        String malop = jtfmalop.getText()+"%";
+        String malop = jtfmalop.getText() + "%";
         try {
             try {
                 ISinhVienDAO sinhVienDAO = (ISinhVienDAO) Class.forName("SinhVien.SinhVienDAO").newInstance();
@@ -574,7 +611,7 @@ public class Search extends javax.swing.JPanel {
         }
         try {
 
-            String masv = jtfmasv.getText()+"%";
+            String masv = jtfmasv.getText() + "%";
             IBangDiemDAO bangDiemDAO = (IBangDiemDAO) Class.forName("BangDiem.BangDiemDAO").newInstance();
             ArrayList<BangDiem> listbd = bangDiemDAO.findByIDSinhVien(masv);
             for (BangDiem bd : listbd) {
@@ -598,14 +635,15 @@ public class Search extends javax.swing.JPanel {
         timkiem();
     }//GEN-LAST:event_jbtSearchActionPerformed
 
-    private void jtfmalopKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfmalopKeyTyped
-    }//GEN-LAST:event_jtfmalopKeyTyped
-
     private void jtfmalopKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfmalopKeyReleased
+       jPanel8.setVisible(false);
+       jPanel5.setVisible(false);
         timkiem();
     }//GEN-LAST:event_jtfmalopKeyReleased
 
     private void jtfmalopKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfmalopKeyPressed
+        jPanel8.setVisible(false);
+       jPanel5.setVisible(false);
         timkiem();
     }//GEN-LAST:event_jtfmalopKeyPressed
 
@@ -626,7 +664,7 @@ public class Search extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtnsearchmasvActionPerformed
 
     private void jtbbangdiemMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbbangdiemMouseReleased
-       
+
     }//GEN-LAST:event_jtbbangdiemMouseReleased
 
     private void jtbbangdiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbbangdiemKeyReleased
@@ -645,13 +683,81 @@ public class Search extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfMaSV2ActionPerformed
 
-    private void jbtDelete1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtDelete1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbtDelete1ActionPerformed
-
     private void jbtUpdate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtUpdate1ActionPerformed
-        // TODO add your handling code here:
+        String masv = jtfMaSV2.getText();
+        String tensv = jtfHoTen2.getText();
+        String hedt = jtfHeDaoTao2.getText();
+        String diachi = jtfDiaChi2.getText();
+        String sdt = jtfDienThoai2.getText();
+        String ngaysinh = jtfngaysinh2.getText();
+        // String ngaysinh = jdate.getDateFormatString();
+        // String strPattern = "[^a-z ]";
+        boolean gioitinh = jrbsex2.isSelected();
+
+        String malop = allClass.get(jcblop2.getSelectedIndex()).getMalop();
+
+        Check c = new Check();
+        if (!checkinfo()) {
+            return;
+        }
+
+        Date d = null;
+        if (ngaysinh == null || ngaysinh.equals("") || !ngaysinh.matches(regexDDMMYYYY)) {
+            JOptionPane.showMessageDialog(this, "Lỗi ngày sinh", "Hãy nhập lại", JOptionPane.ERROR_MESSAGE);
+            jtfngaysinh2.setText("");
+            jtfngaysinh2.requestFocus();
+            return;
+        } else {
+            try {
+                d = new SimpleDateFormat("dd/MM/yyyy").parse(ngaysinh);
+            } catch (ParseException ex) {
+                Logger.getLogger(Search.class.getName()).log(Level.SEVERE, null, ex);
+                return;
+            }
+        }
+
+        SinhVien sinhVien = new SinhVien(masv, tensv, malop, diachi, hedt, d, gioitinh, sdt);
+        int b = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn thay đổi thông tin về sinh viên này?", "Thông Báo", JOptionPane.YES_NO_OPTION);
+        if (b == JOptionPane.YES_OPTION) {
+            SinhVien updateByID = new SinhVienDAO().updateByID(sinhVien);
+
+            if (updateByID != null) {
+                showAll();
+            }
+        }
     }//GEN-LAST:event_jbtUpdate1ActionPerformed
+
+    private void jtbTTSVKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbTTSVKeyReleased
+        loadDataDownCoponnent();
+    }//GEN-LAST:event_jtbTTSVKeyReleased
+
+    private void jtfmalopKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfmalopKeyTyped
+jPanel8.setVisible(false);
+       jPanel5.setVisible(false);
+       timkiem();
+    }//GEN-LAST:event_jtfmalopKeyTyped
+
+    private void jbtDelete1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtDelete1ActionPerformed
+      int b = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa dữ liệu này?", "Thông Báo", JOptionPane.YES_NO_OPTION);
+        if (b == JOptionPane.YES_OPTION) {
+            try {
+
+                String masv = jtfMaSV2.getText();
+                new SinhVienDAO().deleteIDSinhVien(masv);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, "Sinh viên này có điểm, hãy xóa điểm của sinh viên này trước", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            } catch (ClassNotFoundException ex) {
+                JOptionPane.showMessageDialog(this, "Sinh viên này có điểm, hãy xóa điểm của sinh viên này trước", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            }
+            while (dtm.getRowCount() > 0) {
+                dtm.removeRow(0);
+
+            }            
+            jPanel8.setVisible(false);
+            jPanel5.setVisible(false);
+            
+        }
+    }//GEN-LAST:event_jbtDelete1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -692,4 +798,86 @@ public class Search extends javax.swing.JPanel {
     private javax.swing.JTextField jtfmasv;
     private javax.swing.JTextField jtfngaysinh2;
     // End of variables declaration//GEN-END:variables
+
+    private void loadDataDownCoponnent() {
+        jtfMaSV2.setText(jtbTTSV.getValueAt(jtbTTSV.getSelectedRow(), 0).toString());
+        jtfHoTen2.setText(jtbTTSV.getValueAt(jtbTTSV.getSelectedRow(), 1).toString());
+        jcblop2.setSelectedItem(jtbTTSV.getValueAt(jtbTTSV.getSelectedRow(), 2).toString());
+        jtfHeDaoTao2.setText(jtbTTSV.getValueAt(jtbTTSV.getSelectedRow(), 3).toString());
+        jtfngaysinh2.setText(jtbTTSV.getValueAt(jtbTTSV.getSelectedRow(), 4).toString());
+        // jdate.setDateFormatString(jtbTTSV.getValueAt(jtbTTSV.getSelectedRow(), 4).toString());
+        jtfDiaChi2.setText(jtbTTSV.getValueAt(jtbTTSV.getSelectedRow(), 5).toString());
+        jtfDienThoai2.setText(jtbTTSV.getValueAt(jtbTTSV.getSelectedRow(), 7).toString());
+        String sex = jtbTTSV.getValueAt(jtbTTSV.getSelectedRow(), 6).toString();
+        if (sex.equals("Nam")) {
+            jrbsex2.setSelected(true);
+        } else {
+            jrbsex2.setSelected(false);
+        }
+//        
+        jtfMaSV2.setEnabled(false);
+    }
+
+    private boolean checkinfo() {
+         Check c = new Check();
+        if (!c.checkID(jtfMaSV2.getText())) {
+            JOptionPane.showMessageDialog(this, "Nhập mã sai", "Hãy nhập lại", JOptionPane.ERROR_MESSAGE);
+            jtfMaSV2.setText("");
+            jtfMaSV2.requestFocus();
+            return false;
+        } else if (!c.checkSpace(jtfHoTen2.getText()) || !c.check(jtfHoTen2.getText())) {
+            JOptionPane.showMessageDialog(this, "Nhập tên sai", "Hãy nhập lại", JOptionPane.ERROR_MESSAGE);
+            jtfHoTen2.setText("");
+            jtfHoTen2.requestFocus();
+            return false;
+
+        } else if (!c.checkSpace(jtfHeDaoTao2.getText()) || !c.check(jtfHeDaoTao2.getText())) {
+            JOptionPane.showMessageDialog(this, "Kiểm tra lại nhập hệ đào tạo", "Hãy nhập lại", JOptionPane.ERROR_MESSAGE);
+            jtfHeDaoTao2.setText("");
+            jtfHeDaoTao2.requestFocus();
+            return false;
+        } else if (!c.checkSpace(jtfDiaChi2.getText())) {
+            JOptionPane.showMessageDialog(this, "Nhập địa chỉ sai", "Hãy nhập lại", JOptionPane.ERROR_MESSAGE);
+            jtfDiaChi2.setText("");
+            jtfDiaChi2.requestFocus();
+            return false;
+
+        } else if (!c.checkSpace(jtfDienThoai2.getText()) || !c.checkPhone(jtfDienThoai2.getText())) {
+            JOptionPane.showMessageDialog(this, "Nhập phone sai", "Hãy nhập lại", JOptionPane.ERROR_MESSAGE);
+            jtfDienThoai2.setText("");
+            jtfDienThoai2.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
+    
+
+    private void showAll() {
+     while (dtm.getRowCount() > 0) {
+            dtm.removeRow(0);
+
+        }
+        String masv = jtfMaSV2.getText();
+        ArrayList<SinhVien> svs = new SinhVienDAO().getAllByIDSV(masv);
+        for (SinhVien sv : svs) {
+            Vector vector = new Vector();
+            vector.add(sv.getMasv());
+            vector.add(sv.getTensv());
+            vector.add(sv.getMalop());
+            vector.add(sv.getHedaotao());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            vector.add(dateFormat.format(sv.getNgaysinh()));
+            vector.add(sv.getDiachi());
+            if (sv.isGioitinh() == true) {
+                vector.add("Nam");
+            } else {
+                vector.add("Nữ");
+            }
+            vector.add(sv.getSodt());
+            dtm.addRow(vector);
+
+        }
+
+    }
 }
