@@ -56,8 +56,8 @@ public class BangDiemDAO implements IBangDiemDAO {
         ResultSet rs = null;
         if (DBConnect.open()) {
             try {
-                ps = DBConnect.cnn.prepareStatement("select * from tblDiem where fldMaSV = ?");
-                ps.setString(1, masv);
+                ps = DBConnect.cnn.prepareStatement("select * from tblDiem where fldMaSV like ? ");
+                ps.setString(1,masv );
                 rs = ps.executeQuery();
                 list = new ArrayList<>();
                 while (rs.next()) {

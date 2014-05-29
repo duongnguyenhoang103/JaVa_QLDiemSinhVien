@@ -459,7 +459,15 @@ public class frmBangDiem extends javax.swing.JPanel {
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jtbbangdiem.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jtbbangdiem.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -591,8 +599,8 @@ public class frmBangDiem extends javax.swing.JPanel {
         //jrbTrangthai.setSelected(true);
 
     }
-    private void jtbbangdiemMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbbangdiemMouseReleased
-        jcbMasv.setSelectedItem(jtbbangdiem.getValueAt(jtbbangdiem.getSelectedRow(), 0).toString());
+    public void loadDataUpComponent(){
+         jcbMasv.setSelectedItem(jtbbangdiem.getValueAt(jtbbangdiem.getSelectedRow(), 0).toString());
         jcbMaMH.setSelectedItem(jtbbangdiem.getValueAt(jtbbangdiem.getSelectedRow(), 1).toString());
         jcbLanthi.setSelectedItem(jtbbangdiem.getValueAt(jtbbangdiem.getSelectedRow(), 2).toString());
         jcbHeSo.setSelectedItem(jtbbangdiem.getValueAt(jtbbangdiem.getSelectedRow(), 3).toString());
@@ -611,6 +619,9 @@ public class frmBangDiem extends javax.swing.JPanel {
         jcbMaMH.setEnabled(false);
         jcbLanthi.setEnabled(false);
         jcbMaLop.setEnabled(false);
+    }
+    private void jtbbangdiemMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbbangdiemMouseReleased
+       loadDataUpComponent();
     }//GEN-LAST:event_jtbbangdiemMouseReleased
 
     private void jbDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDeleteActionPerformed
@@ -726,25 +737,7 @@ public class frmBangDiem extends javax.swing.JPanel {
     }//GEN-LAST:event_jbUpdateActionPerformed
 
     private void jtbbangdiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbbangdiemKeyReleased
-        jcbMasv.setSelectedItem(jtbbangdiem.getValueAt(jtbbangdiem.getSelectedRow(), 0).toString());
-        jcbMaMH.setSelectedItem(jtbbangdiem.getValueAt(jtbbangdiem.getSelectedRow(), 1).toString());
-        jcbLanthi.setSelectedItem(jtbbangdiem.getValueAt(jtbbangdiem.getSelectedRow(), 2).toString());
-        jcbHeSo.setSelectedItem(jtbbangdiem.getValueAt(jtbbangdiem.getSelectedRow(), 3).toString());
-        jtfDiem.setText(jtbbangdiem.getValueAt(jtbbangdiem.getSelectedRow(), 4).toString());
-        String trangthai = jtbbangdiem.getValueAt(jtbbangdiem.getSelectedRow(), 5).toString();
-        if (trangthai.equals("true")) {
-            jrbTrangthai.setSelected(true);
-        } else {
-            jrbTrangthai.setSelected(false);
-
-        }
-        jbNew.setEnabled(false);
-jbUpdate.setEnabled(true);
-        jbDelete.setEnabled(true);
-        jcbMasv.setEnabled(false);
-        jcbMaMH.setEnabled(false);
-        jcbLanthi.setEnabled(false);
-        jcbMaLop.setEnabled(false);
+      loadDataUpComponent();
       
     }//GEN-LAST:event_jtbbangdiemKeyReleased
 
