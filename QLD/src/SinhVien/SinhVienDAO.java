@@ -64,8 +64,8 @@ public class SinhVienDAO implements ISinhVienDAO {
         ResultSet rs = null;
         if (DBConnect.open()) {
             try {
-                ps = DBConnect.cnn.prepareStatement("select * from tblSinhVien where fldMaLop = ?");
-                ps.setString(1, maLop);
+                ps = DBConnect.cnn.prepareStatement("select * from tblSinhVien where fldMaLop like ? ");
+                ps.setString(1,maLop );
                 rs = ps.executeQuery();
                 list = new ArrayList<>();
                 while (rs.next()) {
@@ -161,10 +161,10 @@ public class SinhVienDAO implements ISinhVienDAO {
         }
     }
 
-    public static void main(String[] args) {
-        System.out.println(new SinhVienDAO().findByIDLop("CN4").get(0).getMalop());
-
-    }
+//    public static void main(String[] args) {
+//        System.out.println(new SinhVienDAO().findByIDLop("CN4").get(0).getMalop());
+//
+//    }
 
     @Override
     public ArrayList<SinhVien> CheckID(String masv) {
@@ -173,7 +173,7 @@ public class SinhVienDAO implements ISinhVienDAO {
         ResultSet rs = null;
         if (DBConnect.open()) {
             try {
-                psCheck = DBConnect.cnn.prepareStatement("select *from tblSinhVien where fldMaSV=?");
+                psCheck = DBConnect.cnn.prepareStatement("select *from tblSinhVien where fldMaSV= ?");
                 psCheck.setString(1, masv);
                 rs = psCheck.executeQuery();
                 list = new ArrayList<SinhVien>();
@@ -190,4 +190,43 @@ public class SinhVienDAO implements ISinhVienDAO {
         }
         return list;
     }
+
+  
+    @Override
+    public ArrayList<SinhVien> getAllByIDSV(String maSV) {
+         ArrayList<SinhVien> list = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        if (DBConnect.open()) {
+            try {
+                ps = DBConnect.cnn.prepareStatement("select * from tblSinhVien where fldMaSV= ?");
+                ps.setString(1,maSV );
+                rs = ps.executeQuery();
+                list = new ArrayList<>();
+                while (rs.next()) {
+                    SinhVien sv = new SinhVien();
+                    sv.setMasv(rs.getString(1));
+                    sv.setTensv(rs.getString(2));
+                    sv.setMalop(rs.getString(3));
+                    sv.setHedaotao(rs.getString(4));
+                    sv.setNgaysinh(new Date(rs.getDate(5).getTime()));
+                    sv.setDiachi(rs.getString(6));
+                    sv.setGioitinh(rs.getBoolean(7));
+                    sv.setSodt(rs.getString(8));
+                    list.add(sv);
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(SinhVienDAO.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                DBConnect.close(ps, rs);
+            }
+
+        }
+
+        return list;
+    }
+
+     
+
 }

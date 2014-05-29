@@ -18,8 +18,6 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  *
@@ -30,14 +28,17 @@ public class frmSinhVien extends javax.swing.JPanel {
     private DefaultTableModel dtm;
     private DefaultComboBoxModel dcbm;
     ArrayList<LopHoc> allClass = null;
+    
     ArrayList<SinhVien> list = null;
     public static String regexDDMMYYYY = "^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d$";
 
     public frmSinhVien() {
         try {
             initComponents();
+
             dcbm = new DefaultComboBoxModel();
             dtm = new DefaultTableModel();
+
             ILopHocDAO lopHocDAO = (ILopHocDAO) Class.forName("LopHoc.LopHocDAO").newInstance();
             allClass = lopHocDAO.getAll();
             for (LopHoc lh : allClass) {
@@ -265,12 +266,22 @@ public class frmSinhVien extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        jtbTTSV.setColumnSelectionAllowed(true);
         jtbTTSV.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtbTTSVMouseClicked(evt);
+            }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 jtbTTSVMouseReleased(evt);
             }
         });
+        jtbTTSV.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtbTTSVKeyReleased(evt);
+            }
+        });
         jScrollPane2.setViewportView(jtbTTSV);
+        jtbTTSV.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         jPanel3.setBackground(new java.awt.Color(153, 204, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 204)));
@@ -432,8 +443,8 @@ public class frmSinhVien extends javax.swing.JPanel {
             Logger.getLogger(frmSinhVien.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private void jtbTTSVMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbTTSVMouseReleased
-        // TODO add your handling code here:
+
+    public void loadDataDownComponnent() {
         jtfMaSV.setText(jtbTTSV.getValueAt(jtbTTSV.getSelectedRow(), 0).toString());
         jtfHoTen.setText(jtbTTSV.getValueAt(jtbTTSV.getSelectedRow(), 1).toString());
         jcblop.setSelectedItem(jtbTTSV.getValueAt(jtbTTSV.getSelectedRow(), 2).toString());
@@ -452,6 +463,10 @@ public class frmSinhVien extends javax.swing.JPanel {
         jbUpdate.setEnabled(true);
         jbDelete.setEnabled(true);
         jtfMaSV.setEnabled(false);
+    }
+    private void jtbTTSVMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbTTSVMouseReleased
+        loadDataDownComponnent();
+
     }//GEN-LAST:event_jtbTTSVMouseReleased
 
     private void jbAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAddActionPerformed
@@ -467,7 +482,6 @@ public class frmSinhVien extends javax.swing.JPanel {
         if (!checkinfo()) {
             return;
         }
-
 
         Date d = null;
         if (ngaysinh == null || ngaysinh.equals("") || !ngaysinh.matches(regexDDMMYYYY)) {
@@ -571,9 +585,9 @@ public class frmSinhVien extends javax.swing.JPanel {
                 String masv = jtfMaSV.getText();
                 new SinhVienDAO().deleteIDSinhVien(masv);
             } catch (SQLException ex) {
-                  JOptionPane.showMessageDialog(this, "Sinh viên này có điểm, hãy xóa điểm của sinh viên này trước", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Sinh viên này có điểm, hãy xóa điểm của sinh viên này trước", "Thông báo", JOptionPane.ERROR_MESSAGE);
             } catch (ClassNotFoundException ex) {
-                  JOptionPane.showMessageDialog(this, "Sinh viên này có điểm, hãy xóa điểm của sinh viên này trước", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Sinh viên này có điểm, hãy xóa điểm của sinh viên này trước", "Thông báo", JOptionPane.ERROR_MESSAGE);
             }
             while (dtm.getRowCount() > 0) {
                 dtm.removeRow(0);
@@ -596,9 +610,9 @@ public class frmSinhVien extends javax.swing.JPanel {
         jtfngaysinh.setText("");
         jtfMaSV.requestFocus();
         jbAdd.setEnabled(true);
-            jbUpdate.setEnabled(false);
-            jbDelete.setEnabled(false);
-            jtfMaSV.setEnabled(true);
+        jbUpdate.setEnabled(false);
+        jbDelete.setEnabled(false);
+        jtfMaSV.setEnabled(true);
     }
 
     private void jbExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExitActionPerformed
@@ -609,15 +623,25 @@ public class frmSinhVien extends javax.swing.JPanel {
     private void jtfMaSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfMaSVActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfMaSVActionPerformed
+
+    private void jtbTTSVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbTTSVMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtbTTSVMouseClicked
+
+    private void jtbTTSVKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbTTSVKeyReleased
+        loadDataDownComponnent();// TODO add your handling code here:
+    }//GEN-LAST:event_jtbTTSVKeyReleased
     private void showAll() {
         while (dtm.getRowCount() > 0) {
             dtm.removeRow(0);
 
         }
-        int selectedIndex = jcblop.getSelectedIndex();
-        LopHoc getLopHoc = allClass.get(selectedIndex);
-        ArrayList<SinhVien> svs = new SinhVienDAO().findByIDLop(getLopHoc.getMalop());
+//        int selectedIndex = jcblop.getSelectedIndex();
+//        LopHoc getLopHoc = allClass.get(selectedIndex);
+//        ArrayList<SinhVien> svs = new SinhVienDAO().findByIDLop(getLopHoc.getMalop());
         //ArrayList<SinhVien> sinhViens = new SinhVienDAO().CheckID(g)
+        String masv = jtfMaSV.getText();
+        ArrayList<SinhVien> svs = new SinhVienDAO().getAllByIDSV(masv);
         for (SinhVien sv : svs) {
             Vector vector = new Vector();
             vector.add(sv.getMasv());
@@ -664,7 +688,6 @@ public class frmSinhVien extends javax.swing.JPanel {
 //            jtfngaysinh.setText("");
 //            jtfngaysinh.requestFocus();
 //            return false;
-
         } else if (!c.checkSpace(jtfDiaChi.getText())) {
             JOptionPane.showMessageDialog(this, "Nhập địa chỉ sai", "Hãy nhập lại", JOptionPane.ERROR_MESSAGE);
             jtfDiaChi.setText("");
