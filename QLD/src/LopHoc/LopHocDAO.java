@@ -139,7 +139,7 @@ public class LopHocDAO implements ILopHocDAO {
       ResultSet rs = null;
         if (DBConnect.open()) {
             try {
-                psCheck = DBConnect.cnn.prepareStatement("select *from tblLop where fldMaLop");
+                psCheck = DBConnect.cnn.prepareStatement("select *from tblLop where fldMaLop= ?");
                 psCheck.setString(1, malop);
                 rs = psCheck.executeQuery();
                 list = new ArrayList<LopHoc>();
