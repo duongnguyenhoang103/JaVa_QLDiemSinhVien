@@ -534,7 +534,7 @@ public class frmBangDiem extends javax.swing.JPanel {
         int heso = jcbHeSo.getSelectedIndex();
         boolean trangthai = jrbTrangthai.isSelected();
         String masv = listsv.get(jcbMasv.getSelectedIndex()).getMasv();
-        String mamh = listmh.get(jcbMasv.getSelectedIndex()).getMamh();
+        String mamh = listmh.get(jcbMaMH.getSelectedIndex()).getMamh();
 
         float diemsv;
         diemsv = Float.parseFloat(diem);
@@ -547,7 +547,7 @@ public class frmBangDiem extends javax.swing.JPanel {
             return;
         }
         if (heso == 0) {
-            JOptionPane.showMessageDialog(this, "Lần Thi phải lớn hơn 0.Vui lòng nhập lại", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Hệ số phải lớn hơn 0.Vui lòng nhập lại", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -628,7 +628,7 @@ public class frmBangDiem extends javax.swing.JPanel {
         int b = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa dữ liệu này?", "Thông Báo", JOptionPane.YES_NO_OPTION);
         if (b == JOptionPane.YES_OPTION) {
             String masv = listsv.get(jcbMasv.getSelectedIndex()).getMasv();
-            String mamh = listmh.get(jcbMasv.getSelectedIndex()).getMamh();
+            String mamh = listmh.get(jcbMaMH.getSelectedIndex()).getMamh();
             int lanthi = jcbLanthi.getSelectedIndex();
             try {
                 new BangDiemDAO().delBangDiem(masv, mamh, lanthi);

@@ -134,8 +134,6 @@ public class frmSinhVien extends javax.swing.JPanel {
             }
         });
 
-        jcblop.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 204));
         jLabel7.setText("Số Điện Thoại");
@@ -266,7 +264,6 @@ public class frmSinhVien extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jtbTTSV.setColumnSelectionAllowed(true);
         jtbTTSV.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jtbTTSVMouseClicked(evt);
@@ -281,7 +278,6 @@ public class frmSinhVien extends javax.swing.JPanel {
             }
         });
         jScrollPane2.setViewportView(jtbTTSV);
-        jtbTTSV.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         jPanel3.setBackground(new java.awt.Color(153, 204, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 204)));

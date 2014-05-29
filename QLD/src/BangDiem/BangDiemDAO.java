@@ -57,7 +57,7 @@ public class BangDiemDAO implements IBangDiemDAO {
         if (DBConnect.open()) {
             try {
                 ps = DBConnect.cnn.prepareStatement("select * from tblDiem where fldMaSV like ? ");
-                ps.setString(1,masv );
+                ps.setString(1, masv);
                 rs = ps.executeQuery();
                 list = new ArrayList<>();
                 while (rs.next()) {
@@ -174,6 +174,17 @@ public class BangDiemDAO implements IBangDiemDAO {
         }
     }
 
+    public void delBangDiemByIDSvMh(String MaSV , String MaMH) throws SQLException {
+        PreparedStatement ps = null;
+        if (DBConnect.open()) {
+            ps = DBConnect.cnn.prepareStatement("delete from tblDiem where fldMaSV =? and fldMaMH =?");
+            ps.setString(1, MaSV);
+ps.setString(2, MaMH);
+            ps.executeUpdate();
+            DBConnect.close();
+        }
+    }
+
     @Override
     public boolean CheckID(String masv, String mamh, int lanthi) {
         PreparedStatement psCheck = null;
@@ -225,7 +236,6 @@ public class BangDiemDAO implements IBangDiemDAO {
         return list;
     }
 
-
     public ArrayList<BangDiem> loaddiem(String masv, String maMon) {
         ArrayList<BangDiem> list = null;
         PreparedStatement ps = null;
@@ -257,7 +267,7 @@ public class BangDiemDAO implements IBangDiemDAO {
 
     @Override
     public ArrayList<BangDiem> findMasv() {
-          ArrayList<BangDiem> list = null;
+        ArrayList<BangDiem> list = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         if (DBConnect.open()) {
@@ -278,6 +288,7 @@ public class BangDiemDAO implements IBangDiemDAO {
         }
         return list;
     }
+
     public static void main(String[] args) {
         System.out.println(new BangDiemDAO().findMaMH("B103104111").get(0).getMasv());
     }
