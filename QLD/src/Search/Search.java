@@ -138,6 +138,11 @@ public class Search extends javax.swing.JPanel {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        jtfmalop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfmalopActionPerformed(evt);
+            }
+        });
         jtfmalop.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtfmalopKeyPressed(evt);
@@ -198,6 +203,11 @@ public class Search extends javax.swing.JPanel {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
+        jtfmasv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfmasvActionPerformed(evt);
+            }
+        });
         jtfmasv.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtfmasvKeyPressed(evt);
@@ -339,7 +349,7 @@ public class Search extends javax.swing.JPanel {
         while (dtm.getRowCount() > 0) {
             dtm.removeRow(0);
         }
-        String malop = jtfmalop.getText();
+        String malop = jtfmalop.getText()+"%";
         try {
             try {
                 ISinhVienDAO sinhVienDAO = (ISinhVienDAO) Class.forName("SinhVien.SinhVienDAO").newInstance();
@@ -363,7 +373,7 @@ public class Search extends javax.swing.JPanel {
         }
         try {
 
-            String masv = jtfmasv.getText();
+            String masv = jtfmasv.getText()+"%";
             IBangDiemDAO bangDiemDAO = (IBangDiemDAO) Class.forName("BangDiem.BangDiemDAO").newInstance();
             ArrayList<BangDiem> listbd = bangDiemDAO.findByIDSinhVien(masv);
             for (BangDiem bd : listbd) {
@@ -421,6 +431,14 @@ public class Search extends javax.swing.JPanel {
     private void jtbbangdiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbbangdiemKeyReleased
 
     }//GEN-LAST:event_jtbbangdiemKeyReleased
+
+    private void jtfmalopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfmalopActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfmalopActionPerformed
+
+    private void jtfmasvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfmasvActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfmasvActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
