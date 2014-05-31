@@ -723,7 +723,7 @@ public class frmBangDiem extends javax.swing.JPanel {
             return;
         }
         BangDiem bd = new BangDiem(masv, mamh, lanthi, heso, diemsv, trangthai);
-        int b = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn chinh sua du liệu này?", "Thông Báo", JOptionPane.YES_NO_OPTION);
+        int b = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn sửa điểm sinh viên này?", "Thông Báo", JOptionPane.YES_NO_OPTION);
         if (b == JOptionPane.YES_OPTION) {
         BangDiem updateID = new BangDiemDAO().upDate(bd);
         if (updateID != null) {
