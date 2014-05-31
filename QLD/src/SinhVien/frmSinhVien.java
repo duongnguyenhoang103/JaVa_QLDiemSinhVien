@@ -450,7 +450,7 @@ public class frmSinhVien extends javax.swing.JPanel {
         jtfDiaChi.setText(jtbTTSV.getValueAt(jtbTTSV.getSelectedRow(), 5).toString());
         jtfDienThoai.setText(jtbTTSV.getValueAt(jtbTTSV.getSelectedRow(), 7).toString());
         String sex = jtbTTSV.getValueAt(jtbTTSV.getSelectedRow(), 6).toString();
-        if (sex.equals("true")) {
+        if (sex.equals("Nam")) {
             jrbsex.setSelected(true);
         } else {
             jrbsex.setSelected(false);
