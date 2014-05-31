@@ -704,7 +704,7 @@ public class frmBangDiem extends javax.swing.JPanel {
         int heso = jcbHeSo.getSelectedIndex();
         boolean trangthai = jrbTrangthai.isSelected();
         String masv = listsv.get(jcbMasv.getSelectedIndex()).getMasv();
-        String mamh = listmh.get(jcbMasv.getSelectedIndex()).getMamh();
+        String mamh = listmh.get(jcbMaMH.getSelectedIndex()).getMamh();
 
         float diemsv;
         diemsv = Float.parseFloat(diem);
