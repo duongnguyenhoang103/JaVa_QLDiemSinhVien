@@ -579,9 +579,9 @@ public class frmBangDiem extends javax.swing.JPanel {
             v.add(bd.getHeso());
             v.add(bd.getDiem());
             if (bd.isTrangthai() == true) {
-                v.add("Bật");
+                v.add("true");
             } else {
-                v.add("Tắt");
+                v.add("false");
 
             }
             dtm.addRow(v);
@@ -600,6 +600,7 @@ public class frmBangDiem extends javax.swing.JPanel {
 
     }
     public void loadDataUpComponent(){
+        
          jcbMasv.setSelectedItem(jtbbangdiem.getValueAt(jtbbangdiem.getSelectedRow(), 0).toString());
         jcbMaMH.setSelectedItem(jtbbangdiem.getValueAt(jtbbangdiem.getSelectedRow(), 1).toString());
         jcbLanthi.setSelectedItem(jtbbangdiem.getValueAt(jtbbangdiem.getSelectedRow(), 2).toString());
@@ -722,9 +723,12 @@ public class frmBangDiem extends javax.swing.JPanel {
             return;
         }
         BangDiem bd = new BangDiem(masv, mamh, lanthi, heso, diemsv, trangthai);
+        int b = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn chinh sua du liệu này?", "Thông Báo", JOptionPane.YES_NO_OPTION);
+        if (b == JOptionPane.YES_OPTION) {
         BangDiem updateID = new BangDiemDAO().upDate(bd);
         if (updateID != null) {
             showAll();
+        }
         }
         jbNew.setEnabled(true);
         jbUpdate.setEnabled(false);
