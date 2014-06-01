@@ -1,0 +1,6 @@
+1,Mo SQL Server Configuration Manager
+2. Chon SQL Server.. Network Configuration
+3.chon Protocols for SQLExPRESS
+4.Kick TCP/IP : Chon IPAddress
+		- Chon IPAll
+		- Thay doi ten cong o TCP Dynamic Port
