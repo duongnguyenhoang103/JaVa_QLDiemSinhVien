@@ -427,6 +427,8 @@ public class frmSinhVien extends javax.swing.JPanel {
         try {
             ISinhVienDAO sinhVienDAO = (ISinhVienDAO) Class.forName("SinhVien.SinhVienDAO").newInstance();
             list = new SinhVienDAO().getAll();
+            for (int i=0;i< dtm.getRowCount();i++)
+                dtm.removeRow(i);
             for (SinhVien sv : list) {
                 dtm.addRow(toObjectData(sv));
             }
@@ -554,10 +556,10 @@ public class frmSinhVien extends javax.swing.JPanel {
         if (updateByID != null) {
             showAll();
         }
-        jbAdd.setEnabled(true);
-        jbUpdate.setEnabled(false);
-        jbDelete.setEnabled(false);
-        jtfMaSV.setEnabled(true);
+//        jbAdd.setEnabled(true);
+//        jbUpdate.setEnabled(false);
+//        jbDelete.setEnabled(false);
+//        jtfMaSV.setEnabled(true);
 
     }//GEN-LAST:event_jbUpdateActionPerformed
     private static Object[] toObjectData(SinhVien sv) {
@@ -657,7 +659,11 @@ public class frmSinhVien extends javax.swing.JPanel {
             dtm.addRow(vector);
 
         }
-        resetForm();
+        jtfMaSV.setEnabled(false);
+        jbAdd.setEnabled(false);
+        jbUpdate.setEnabled(true);
+        jbDelete.setEnabled(true);
+     //   resetForm();
     }
 
     public boolean checkinfo() {
