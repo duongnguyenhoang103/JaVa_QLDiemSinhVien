@@ -40,7 +40,7 @@ public class Report extends javax.swing.JPanel {
     }
 public static Connection Con() { 
         
-        String url = "jdbc:sqlserver://localhost:51777;databaseName=Student"; 
+        String url = "jdbc:sqlserver://localhost:1030;databaseName=Student"; 
         String username = "sa"; 
         String password = "123456"; 
         Connection conn = null; 
