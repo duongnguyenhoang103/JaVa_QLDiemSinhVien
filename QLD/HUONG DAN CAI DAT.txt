@@ -4,6 +4,3 @@ Bước 3: Add Driver sqljdbc vào Netbean
 
 
 ====================================
-SVTH: Trần Văn Tuyền
-Lớp: L10CQCN04
-ID: B103104290
