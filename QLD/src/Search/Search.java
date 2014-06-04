@@ -37,6 +37,7 @@ import javax.swing.table.DefaultTableModel;
 public class Search extends javax.swing.JPanel {
 
     private DefaultTableModel dtm;
+
     private DefaultTableModel dtmMark;
     ArrayList<BangDiem> listbdiem = null;
     ArrayList<LopHoc> allClass = null;
@@ -60,6 +61,8 @@ public class Search extends javax.swing.JPanel {
             initComponents();
             jPanel8.setVisible(false);
             jPanel5.setVisible(false);
+            jPanel7.setVisible(false);
+            jPanel6.setVisible(false);
 
             DefaultComboBoxModel dcbm = new DefaultComboBoxModel();
             ILopHocDAO lopHocDao = (ILopHocDAO) Class.forName("LopHoc.LopHocDAO").newInstance();
@@ -709,6 +712,11 @@ public class Search extends javax.swing.JPanel {
         jbtDeleteBD.setForeground(new java.awt.Color(255, 0, 51));
         jbtDeleteBD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Remove.png"))); // NOI18N
         jbtDeleteBD.setText("Delete");
+        jbtDeleteBD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtDeleteBDActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -903,11 +911,11 @@ public class Search extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtnsearchmasvActionPerformed
 
     private void jtbbangdiemMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbbangdiemMouseReleased
-        loadDataUpComponent();
+        loadDataUpComponentBD();
     }//GEN-LAST:event_jtbbangdiemMouseReleased
 
     private void jtbbangdiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbbangdiemKeyReleased
-  loadDataUpComponent();
+        loadDataUpComponentBD();
     }//GEN-LAST:event_jtbbangdiemKeyReleased
 
     private void jtfmalopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfmalopActionPerformed
@@ -961,7 +969,7 @@ public class Search extends javax.swing.JPanel {
             SinhVien updateByID = new SinhVienDAO().updateByID(sinhVien);
 
             if (updateByID != null) {
-                showAll();
+                showAllSV();
             }
         }
     }//GEN-LAST:event_jbtUpdate1ActionPerformed
@@ -983,15 +991,18 @@ public class Search extends javax.swing.JPanel {
 
                 String masv = jtfMaSV2.getText();
                 new SinhVienDAO().deleteIDSinhVien(masv);
+                while (dtm.getRowCount() > 0) {
+                    dtm.removeRow(0);
+                }
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, "Sinh viên này có điểm, hãy xóa điểm của sinh viên này trước", "Thông báo", JOptionPane.ERROR_MESSAGE);
             } catch (ClassNotFoundException ex) {
                 JOptionPane.showMessageDialog(this, "Sinh viên này có điểm, hãy xóa điểm của sinh viên này trước", "Thông báo", JOptionPane.ERROR_MESSAGE);
             }
-            while (dtm.getRowCount() > 0) {
-                dtm.removeRow(0);
-
-            }
+//            while (dtm.getRowCount() > 0) {
+//                dtm.removeRow(0);
+//
+//            }
             jPanel8.setVisible(false);
             jPanel5.setVisible(false);
 
@@ -1003,7 +1014,7 @@ public class Search extends javax.swing.JPanel {
     }//GEN-LAST:event_jcbMaLopActionPerformed
 
     private void jbtUpdateBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtUpdateBDActionPerformed
- if (!checkinfoBD()) {
+        if (!checkinfoBD()) {
             return;
         }
         String diem = jtfDiem.getText();
@@ -1011,7 +1022,7 @@ public class Search extends javax.swing.JPanel {
         int heso = jcbHeSo.getSelectedIndex();
         boolean trangthai = jrbTrangthai.isSelected();
         String masv = listsv.get(jcbMasv.getSelectedIndex()).getMasv();
-        String mamh = listmh.get(jcbMasv.getSelectedIndex()).getMamh();
+        String mamh = listmh.get(jcbMaMH.getSelectedIndex()).getMamh();
 
         float diemsv;
         diemsv = Float.parseFloat(diem);
@@ -1030,18 +1041,44 @@ public class Search extends javax.swing.JPanel {
             return;
         }
         BangDiem bd = new BangDiem(masv, mamh, lanthi, heso, diemsv, trangthai);
-        BangDiem updateID = new BangDiemDAO().upDate(bd);
-        if (updateID != null) {
-            showAllBD();
-        }
-      
-        jcbMasv.setEnabled(true);
-        jcbMaMH.setEnabled(true);
-        jcbLanthi.setEnabled(true);
-        jcbMaLop.setEnabled(true);
+        int b = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn sửa điểm sinh viên này?", "Thông Báo", JOptionPane.YES_NO_OPTION);
+        if (b == JOptionPane.YES_OPTION) {
+            BangDiem updateID = new BangDiemDAO().upDate(bd);
+            if (updateID != null) {
+                showAllBD();
+            }
+
+            jcbMasv.setEnabled(false);
+            jcbMaMH.setEnabled(false);
+            jcbLanthi.setEnabled(false);
+            jcbMaLop.setEnabled(false);
 
     }//GEN-LAST:event_jbtUpdateBDActionPerformed
+    }
+    private void jbtDeleteBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtDeleteBDActionPerformed
+        int b = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa dữ liệu này?", "Thông Báo", JOptionPane.YES_NO_OPTION);
+        if (b == JOptionPane.YES_OPTION) {
 
+            try {
+                String masv = listsv.get(jcbMasv.getSelectedIndex()).getMasv();
+                String mamh = listmh.get(jcbMaMH.getSelectedIndex()).getMamh();
+                int lanthi = jcbLanthi.getSelectedIndex();
+                new BangDiemDAO().delBangDiem(masv, mamh, lanthi);
+                while (dtmMark.getRowCount() > 0) {
+                    dtmMark.removeRow(0);
+
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(frmBangDiem.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(frmBangDiem.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            //  resetForm();
+            //loadDataBD();            
+    }//GEN-LAST:event_jbtDeleteBDActionPerformed
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -1152,7 +1189,7 @@ public class Search extends javax.swing.JPanel {
         return true;
     }
 
-    private void showAll() {
+    private void showAllSV() {
         while (dtm.getRowCount() > 0) {
             dtm.removeRow(0);
 
@@ -1180,7 +1217,14 @@ public class Search extends javax.swing.JPanel {
 
     }
 
-    private void loadDataUpComponent() {
+    private void loadDataUpComponentBD() {
+        jPanel7.setVisible(true);
+        jPanel6.setVisible(true);
+        jcbMaLop.enable(false);
+        jcbMasv.enable(false);
+        jcbMaMH.enable(false);
+        jcbLanthi.enable(false);
+
         jcbMasv.setSelectedItem(jtbbangdiem.getValueAt(jtbbangdiem.getSelectedRow(), 0).toString());
         jcbMaMH.setSelectedItem(jtbbangdiem.getValueAt(jtbbangdiem.getSelectedRow(), 1).toString());
         jcbLanthi.setSelectedItem(jtbbangdiem.getValueAt(jtbbangdiem.getSelectedRow(), 2).toString());
@@ -1196,7 +1240,7 @@ public class Search extends javax.swing.JPanel {
     }
 
     private boolean checkinfoBD() {
-     Check c = new Check();
+        Check c = new Check();
         if (!c.checkSpace(jtfDiem.getText())) {
             JOptionPane.showMessageDialog(this, "Nhập điểm sai", "Hãy nhập lại", JOptionPane.ERROR_MESSAGE);
             jtfDiem.setText("");
@@ -1207,8 +1251,8 @@ public class Search extends javax.swing.JPanel {
     }
 
     private void showAllBD() {
-         while (dtm.getRowCount() > 0) {
-            dtm.removeRow(0);
+        while (dtmMark.getRowCount() > 0) {
+            dtmMark.removeRow(0);
         }
         ArrayList<BangDiem> bangDiems = new BangDiemDAO().getAll();
         for (BangDiem bd : bangDiems) {
@@ -1219,12 +1263,12 @@ public class Search extends javax.swing.JPanel {
             v.add(bd.getHeso());
             v.add(bd.getDiem());
             if (bd.isTrangthai() == true) {
-                v.add("Bật");
+                v.add("true");
             } else {
-                v.add("Tắt");
+                v.add("false");
 
             }
-            dtm.addRow(v);
+            dtmMark.addRow(v);
         }
     }
 }
