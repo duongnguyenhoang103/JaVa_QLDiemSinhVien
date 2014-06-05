@@ -363,9 +363,12 @@ public class frmKhoa extends javax.swing.JPanel {
         String tenkhoa = jtfTenKhoa.getText();
         String sdt = jtfSDT.getText();
         Khoa k = new Khoa(makhoa, tenkhoa, sdt);
+        int b = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn thay đổi thông tin về khoa này ?", "Thông Báo", JOptionPane.YES_NO_OPTION);
+        if (b == JOptionPane.YES_OPTION) {
         Khoa update = new KhoaDAO().updateByID(k);
         if (update != null) {
             showAll();
+        }
         }
         jbNew.setEnabled(true);
         jbUpdate.setEnabled(false);
@@ -415,6 +418,10 @@ public class frmKhoa extends javax.swing.JPanel {
     }
     private void jbExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExitActionPerformed
         this.ResetForm();
+         jtfMaKhoa.setEnabled(true);
+         jbNew.setEnabled(true);
+         jbUpdate.setEnabled(false);
+            jbDelete.setEnabled(false);
     }//GEN-LAST:event_jbExitActionPerformed
     private void showAll() {
         while (dtm.getRowCount() > 0) {
