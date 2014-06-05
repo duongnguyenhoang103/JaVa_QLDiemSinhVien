@@ -218,7 +218,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="title" type="java.lang.String" value="MARK SYSTEM MANAGER - CREATED BY: NGUYEN HOANG DUONG -TRUONG: DAI HOC DIEN LUC"/>
+    <Property name="title" type="java.lang.String" value="QUAN LY DIEM - CREATED BY: NGUYEN HOANG DUONG -TRUONG: DAI HOC DIEN LUC"/>
     <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
