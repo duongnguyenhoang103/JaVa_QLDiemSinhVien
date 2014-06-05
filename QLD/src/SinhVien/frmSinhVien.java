@@ -552,9 +552,12 @@ public class frmSinhVien extends javax.swing.JPanel {
         }
 
         SinhVien sinhVien = new SinhVien(masv, tensv, malop, diachi, hedt, d, gioitinh, sdt);
+         int b = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn thay đổi thông tin về sinh viên này?", "Thông Báo", JOptionPane.YES_NO_OPTION);
+        if (b == JOptionPane.YES_OPTION) {
         SinhVien updateByID = new SinhVienDAO().updateByID(sinhVien);
         if (updateByID != null) {
             showAll();
+        }
         }
 //        jbAdd.setEnabled(true);
 //        jbUpdate.setEnabled(false);
