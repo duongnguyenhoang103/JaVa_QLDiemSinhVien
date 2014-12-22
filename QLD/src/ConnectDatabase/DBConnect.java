@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public class DBConnect {
 
     public static String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    public static String url = "jdbc:sqlserver://localhost:1030;databaseName=Student";
+    public static String url = "jdbc:sqlserver://localhost:1442;databaseName=Student";
     public static String user = "sa";
     public static String pass = "123456";
     public static Connection cnn;
