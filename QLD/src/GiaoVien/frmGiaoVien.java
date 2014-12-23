@@ -569,6 +569,10 @@ public class frmGiaoVien extends javax.swing.JPanel {
         jtfDienThoai.setText("");
         jtfngaysinh.setText("");
         jtfMaGV.requestFocus();
+        jtfMaGV.setEnabled(true);
+        jbAdd.setEnabled(true);
+        jbUpdate.setEnabled(false);
+        jbDelete.setEnabled(false);
     }
     private void jbDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDeleteActionPerformed
         int b = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa dữ liệu này?", "Thông Báo", JOptionPane.YES_NO_OPTION);
@@ -592,11 +596,13 @@ public class frmGiaoVien extends javax.swing.JPanel {
             jbUpdate.setEnabled(false);
             jbDelete.setEnabled(false);
             jtfMaGV.setEnabled(true);
+             
         }
     }//GEN-LAST:event_jbDeleteActionPerformed
 
     private void jbExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExitActionPerformed
         this.resetForm();
+       
     }//GEN-LAST:event_jbExitActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
