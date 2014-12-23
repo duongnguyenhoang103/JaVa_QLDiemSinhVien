@@ -415,13 +415,14 @@ public class frmKhoa extends javax.swing.JPanel {
         jtfTenKhoa.setText("");
         jtfSDT.setText("");
         jtfMaKhoa.requestFocus();
-    }
-    private void jbExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExitActionPerformed
-        this.ResetForm();
          jtfMaKhoa.setEnabled(true);
          jbNew.setEnabled(true);
          jbUpdate.setEnabled(false);
             jbDelete.setEnabled(false);
+    }
+    private void jbExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExitActionPerformed
+        this.ResetForm();
+        
     }//GEN-LAST:event_jbExitActionPerformed
     private void showAll() {
         while (dtm.getRowCount() > 0) {

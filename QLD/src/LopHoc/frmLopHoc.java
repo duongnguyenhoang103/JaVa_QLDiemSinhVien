@@ -419,6 +419,10 @@ public class frmLopHoc extends javax.swing.JPanel {
         jtfTenLop.setText("");
         jtfKhoaHoc.setText("");
         jtfMaLop.requestFocus();
+         jbNew.setEnabled(true);
+            jbUpdate.setEnabled(false);
+            jbDelete.setEnabled(false);
+            jtfMaLop.setEnabled(true);
     }
     private void jbUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUpdateActionPerformed
         if (!checkinfo()) {
